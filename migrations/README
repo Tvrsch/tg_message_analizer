@@ -1,0 +1,5 @@
+Generic single-database configuration with an async dbapi.
+
+alembic revision --autogenerate -m "migration message"
+alembic downgrade base
+alembic upgrade head
