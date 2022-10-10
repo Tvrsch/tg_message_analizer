@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters.command import Command
 from aiogram.filters.text import Text
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message
 
 router = Router()
 
@@ -11,8 +11,7 @@ router = Router()
 async def cmd_start(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(
-        text="Выберите, что хотите заказать: " "блюда (/food) или напитки (/drinks).",
-        reply_markup=ReplyKeyboardRemove(),
+        text="Запросить статистику сообщений пользователей можно с помощью команды /start",
     )
 
 
@@ -20,4 +19,4 @@ async def cmd_start(message: Message, state: FSMContext):
 @router.message(Text(text="отмена", text_ignore_case=True))
 async def cmd_cancel(message: Message, state: FSMContext):
     await state.clear()
-    await message.answer(text="Действие отменено", reply_markup=ReplyKeyboardRemove())
+    await message.answer(text="Действие отменено")

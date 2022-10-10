@@ -7,9 +7,9 @@ from aiogram.filters.command import Command
 from aiogram.handlers import MessageHandler
 from sqlalchemy import text
 from dotenv import load_dotenv
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from filters.chat_types import UserFilter
-from keyboards import make_row_keyboard
 
 load_dotenv()
 
@@ -23,7 +23,7 @@ class GetStat(StatesGroup):
     select_end_date = State()
 
 
-async def get_users_stats(session, start_date, end_date):
+async def get_users_stats(session: AsyncSession, start_date: datetime, end_date: datetime):
     stats = await session.execute(
         text(
             f"select tg_user.tg_username, sum(words_number) as words from words_stat join tg_user on tg_user.id = user_id where words_stat.created_at > '{start_date}'::date and words_stat.created_at < '{end_date}'::date group by tg_username;"

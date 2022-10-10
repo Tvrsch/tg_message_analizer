@@ -1,18 +1,15 @@
 import os
-from datetime import datetime
-from asyncio import current_task
+
 from typing import Callable, Dict, Any, Awaitable
 
 from aiogram import BaseMiddleware
 
 from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.orm import sessionmaker
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     create_async_engine,
-    async_scoped_session,
 )
 
 load_dotenv()

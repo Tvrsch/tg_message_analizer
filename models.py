@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import ForeignKey, Column, String, Integer, TIMESTAMP, text, JSON
+from sqlalchemy import ForeignKey, Column, String, Integer, TIMESTAMP, text, Boolean
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -11,6 +11,7 @@ class TgUser(Base):
     id = Column(Integer, primary_key=True)
     tg_id = Column(Integer, nullable=False)
     tg_username = Column(String)
+    is_ignored = Column(Boolean, default=False)
     created_at = Column(
         TIMESTAMP, nullable=False, server_default=text("CURRENT_TIMESTAMP")
     )
