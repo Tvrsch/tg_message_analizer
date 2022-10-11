@@ -23,6 +23,7 @@ class WordsStat(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("tg_user.id"))
     chat_id = Column(Integer)
+    message_id = Column(Integer)
     words_number = Column(Integer)
     sentence = Column(String)
     created_at = Column(

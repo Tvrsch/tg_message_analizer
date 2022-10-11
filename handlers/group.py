@@ -40,6 +40,7 @@ class GroupHandler(MessageHandler):
             WordsStat(
                 user_id=bd_user.id,
                 chat_id=self.event.chat.id,
+                message_id=self.event.message_id,
                 words_number=len(refined_words),
                 sentence=self.event.text,
             )
