@@ -51,6 +51,7 @@ class AddUserIgnore(MessageHandler):
         session = self.data["session"]
         ignore_user = int(self.event.text.lower().split(" ")[1])
         await session.execute(update(TgUser).where(TgUser.tg_id == ignore_user).values(is_ignored=True))
+        await session.commit()
         await self.event.answer(text=f"Пользователь {ignore_user} добавлен в игнор лист")
 
 @router.message(
@@ -62,6 +63,7 @@ class RemoveUserIgnore(MessageHandler):
         session = self.data["session"]
         unignore_user = int(self.event.text.lower().split(" ")[1])
         await session.execute(update(TgUser).where(TgUser.tg_id == unignore_user).values(is_ignored=False))
+        await session.commit()
         await self.event.answer(text=f"Пользователь {unignore_user} убран из игнор листа")
 
 
