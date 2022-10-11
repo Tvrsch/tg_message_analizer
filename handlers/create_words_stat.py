@@ -26,7 +26,11 @@ class GetStat(StatesGroup):
 async def get_users_stats(session: AsyncSession, start_date: datetime, end_date: datetime):
     stats = await session.execute(
         text(
-            f"select tg_user.tg_username, sum(words_number) as words from words_stat join tg_user on tg_user.id = user_id where words_stat.created_at > '{start_date}'::date and words_stat.created_at < '{end_date}'::date group by tg_username;"
+            f"""select tg_user.tg_username, sum(words_number) as words from words_stat 
+            join tg_user on tg_user.id = user_id 
+            where tg_user.is_ignored is false and words_stat.created_at > '{start_date}'::date 
+            and words_stat.created_at < '{end_date}'::date 
+            group by tg_username;"""
         )
     )
     return stats
