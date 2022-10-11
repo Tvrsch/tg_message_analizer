@@ -21,7 +21,7 @@ router = Router()
 class GetUsers(MessageHandler):
     async def handle(self):
         session = self.data["session"]
-        users = await session.execute(select(TgUser.tg_id, TgUser.tg_username))
+        users = await session.execute(select(TgUser.tg_id, TgUser.tg_username, TgUser.is_ignored))
         sentence_list = [
             f"Пользователь {row['tg_username']} id {row['tg_id']} В игноре? {row['is_ignored']}"
             for row in users
@@ -49,7 +49,7 @@ async def cmd_start(message: Message, state: FSMContext):
 class AddUserIgnore(MessageHandler):
     async def handle(self):
         session = self.data["session"]
-        ignore_user = int(self.event.text.lower())
+        ignore_user = int(self.event.text.lower().split(" ")[1])
         await session.execute(update(TgUser).where(TgUser.tg_id == ignore_user).values(is_ignore=True))
         await self.event.answer(text=f"Пользователь {ignore_user} добавлен в игнор лист")
 
@@ -60,7 +60,7 @@ class AddUserIgnore(MessageHandler):
 class RemoveUserIgnore(MessageHandler):
     async def handle(self):
         session = self.data["session"]
-        unignore_user = int(self.event.text.lower())
+        unignore_user = int(self.event.text.lower().split(" ")[1])
         await session.execute(update(TgUser).where(TgUser.tg_id == unignore_user).values(is_ignore=False))
         await self.event.answer(text=f"Пользователь {unignore_user} убран из игнор листа")
 

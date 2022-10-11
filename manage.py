@@ -35,6 +35,7 @@ def main():
 
     group.router.message.middleware(DbMiddleware())
     create_words_stat.router.message.middleware(DbMiddleware())
+    common.router.message.middleware(DbMiddleware())
 
     app = Application()
     app["bot"] = bot

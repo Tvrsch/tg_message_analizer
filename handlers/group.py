@@ -17,7 +17,7 @@ class GroupHandler(MessageHandler):
     async def handle(self):
         tg_user_id = self.event.from_user.id
         words = self.event.text.split()
-        refined_words = [w for w in words if not w.isdigit()]
+        refined_words = [w for w in words if not w.isdigit() and len(w) >= 2]
         if len(refined_words) < 3:
             return
 

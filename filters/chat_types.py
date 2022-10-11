@@ -2,7 +2,7 @@ from typing import Union
 
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
-from langdetect import detect
+from langdetect import detect, LangDetectException
 
 
 class ChatTypeFilter(BaseFilter):
@@ -19,10 +19,13 @@ class LanguageTypeFilter(BaseFilter):
     language_type: Union[str, list]
 
     async def __call__(self, message: Message) -> bool:
-        if isinstance(self.language_type, str):
-            return detect(message.text) == self.language_type
-        else:
-            return detect(message.text) in self.language_type
+        try:
+            if isinstance(self.language_type, str):
+                return detect(message.text) == self.language_type
+            else:
+                return detect(message.text) in self.language_type
+        except LangDetectException:
+            return False
 
 
 class UserFilter(BaseFilter):
