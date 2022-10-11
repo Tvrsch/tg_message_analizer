@@ -34,6 +34,7 @@ def main():
     dp.include_router(create_words_stat.router)
 
     group.router.message.middleware(DbMiddleware())
+    group.router.edited_message.middleware(DbMiddleware())
     create_words_stat.router.message.middleware(DbMiddleware())
     common.router.message.middleware(DbMiddleware())
 
