@@ -31,6 +31,7 @@ def count_words(text: str) -> [list, int]:
     refined_words = [w for w in words if not w.isdigit() and len(w) >= 2]
     return refined_words, len(refined_words)
 
+
 @router.message(
     ChatTypeFilter(chat_type=["group", "supergroup"]),
     LanguageTypeFilter(language_type="en"),
@@ -56,7 +57,7 @@ class GroupHandler(MessageHandler):
         await session.commit()
 
 
-@router.message(
+@router.edited_message(
     ChatTypeFilter(chat_type=["group", "supergroup"]),
     LanguageTypeFilter(language_type="en"),
     content_types="text",
